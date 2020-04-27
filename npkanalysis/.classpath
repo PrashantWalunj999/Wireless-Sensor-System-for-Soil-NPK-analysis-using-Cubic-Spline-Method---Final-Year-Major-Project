@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="npkanalysis/src"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/httpasyncclient-4.1.1.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/httpcore-nio-4.4.4.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/json-20160212.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/lib/unirest-java-1.4.9.jar"/>
+	<classpathentry kind="lib" path="npkanalysis/dist/npkanalysis.jar"/>
+	<classpathentry kind="output" path="npkanalysis/build/classes"/>
+</classpath>
