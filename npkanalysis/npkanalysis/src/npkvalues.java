@@ -1447,13 +1447,14 @@ temp1=temp1/5;
         temp1= (double) (temp / 100);
 nbkval.setText(""+temp1);
 
-/*
 //newtons forward
 temp1=0;
 temp1=temp1+sumn;
-frdval=this.applyForwardInterpolation(N,dist1);
+//frdval=this.applyForwardInterpolation(N,dist1);
+frdval=obj.interpolate(0, dist1);
 temp1=temp1+frdval;
-frdval=this.applyForwardInterpolation(N,dist2);
+//frdval=this.applyForwardInterpolation(N,dist2);
+frdval=obj.interpolate(0, dist2);
 temp1=temp1+frdval;
 temp1=temp1/5;
  temp = (int) (temp1 * 100);
@@ -1461,9 +1462,11 @@ temp1=temp1/5;
 nfnval.setText(""+temp1);
 temp1=0;
 temp1=temp1+sump;
-frdval=this.applyForwardInterpolation(P,dist1);
+//frdval=this.applyForwardInterpolation(P,dist1);
+frdval=obj1.interpolate(0, dist1);
 temp1=temp1+frdval;
-frdval=this.applyForwardInterpolation(P,dist2);
+//frdval=this.applyForwardInterpolation(P,dist2);
+frdval=obj1.interpolate(0, dist2);
 temp1=temp1+frdval;
 temp1=temp1/5;
  temp = (int) (temp1 * 100);
@@ -1472,15 +1475,17 @@ nfpval.setText(""+temp1);
 
 temp1=0;
 temp1=temp1+sumk;
-frdval=this.applyForwardInterpolation(K,dist1);
+//frdval=this.applyForwardInterpolation(K,dist1);
+frdval=obj2.interpolate(0, dist1);
 temp1=temp1+frdval;
-frdval=this.applyForwardInterpolation(K,dist2);
+//frdval=this.applyForwardInterpolation(K,dist2);
+frdval=obj2.interpolate(0, dist2);
 temp1=temp1+frdval;
 temp1=temp1/5;
 temp = (int) (temp1 * 100);
         temp1= (double) (temp / 100);
 nfkval.setText(""+temp1);
-*/
+
 
 //RUNGE KUTTA
 double k1=0,k2=0,k3=0,k4=0,k=0,rkval=0;
