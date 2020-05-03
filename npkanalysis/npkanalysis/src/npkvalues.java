@@ -31,12 +31,21 @@ import org.json.JSONObject;
  */
 public class npkvalues extends javax.swing.JFrame {
 
+    private static double applyCubicsSpline(double[][] N, double dist1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     /**
      * Creates new form npkvalues
      */
      public double x[], y[][], h, r;
     public npkvalues() {
         initComponents();
+    }
+
+    private npkvalues(double[] d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public double valueofn(double n1){
         double temp=0;
@@ -110,56 +119,31 @@ public class npkvalues extends javax.swing.JFrame {
     
     }
         
-      //For calculating cubic splines of incremental data, interpolation, from http://www.frank-buss.de/CubicSpline.java //
-
-     // ha class phkt add karaycha tyt
-     class CubicSpline {							
-     	private double y[];
-     	private double y2[];
-     	
-     	//**
-     	 // The constructor calculates the second derivatives of the interpolating function
-     	  //at the tabulated points xi, with xi = (i, y[i]).
-     	  //Based on numerical recipes in C, http://www.library.cornell.edu/nr/bookcpdf/c3-3.pdf .
-     	 // @param y Array of y coordinates for cubic-spline interpolation.
-     	 //
-     	public CubicSpline(double y[]) {
-     		this.y = y;
-     		int n = y.length;
-     		y2 = new double[n];
-     		double u[] = new double[n];
-     		for (int i = 1; i < n - 1; i++) {
-     			y2[i] = -1.0 / (4.0 + y2[i - 1]);
-     			u[i] = (6.0 * (y[i + 1] - 2.0 * y[i] + y[i - 1]) - u[i - 1]) / (4.0 + y2[i - 1]);
-     		}
-     		for (int i = n - 2; i >= 0; i--) {
-     			y2[i] = y2[i] * y2[i + 1] + u[i];
-     		}
-     	}
-
-     	//**
-     	 //* Returns a cubic-spline interpolated value y for the point between
-     	 //* point (n, y[n]) and (n+1, y[n+1), with t ranging from 0 for (n, y[n])
-     	 //* to 1 for (n+1, y[n+1]).  
-     	 //* @param startIndex The start index/ point.
-     	 //* @param dist2NextPoint The distance to the next point (0..1).
-     	 //* @return A cubic-spline interpolated y value.
-     	 //*//
-     	public double interpolate(int startIndex, double dist2NextPoint) {
-     		startIndex = 0;
-     		return dist2NextPoint * y[startIndex + 1] - ((dist2NextPoint - 1.0) * dist2NextPoint * ((dist2NextPoint - 2.0) * y2[startIndex] - (dist2NextPoint + 1.0) * y2[startIndex + 1])) / 6.0 + y[startIndex] - dist2NextPoint * y[startIndex];
-     	}
-     	
-     	/*public static void main (String[] args){
-     		double[] d = {30,60,90};//{18,38,77,172,310,498,676,945,1061,1183,1249,1064,897,690,460,301,170,110,33,28,7}; ethe 3 value ghetoy  but o/p ekcha yetoy..o/p 3 yayla phijet.   
-     		
-     		CubicSpline s = new CubicSpline(d);
-     		System.out.println(s.interpolate(1,0.5));
-
-     	}*/
-     }	    
-    /*
-    public double applyForwardInterpolation(double data[][],double Xr) {  //add cubic spline interpolation method
+    /*public double applyCubicSpline(double data[][], double Xr)
+    {
+        int n = 3;
+        double y[] = new double[n];
+        double y2[] = new double[n];
+        double dist2NextPoint = Xr;
+        int startIndex = 1;
+        
+        for (int i = 0; i < n; i++) {
+           
+                y[i] = data[i][1];
+            
+        }
+		double u[] = new double[n];
+		for (int i = 1; i < n - 1; i++) {
+			y2[i] = -1.0 / (4.0 + y2[i - 1]);
+			u[i] = (6.0 * (y[i + 1] - 2.0 * y[i] + y[i - 1]) - u[i - 1]) / (4.0 + y2[i - 1]);
+		}
+		for (int i = n - 2; i >= 0; i--) {
+			y2[i] = y2[i] * y2[i + 1] + u[i];
+		}
+	
+    return (dist2NextPoint * y[startIndex + 1] - ((dist2NextPoint - 1.0) * dist2NextPoint * ((dist2NextPoint - 2.0) * y2[startIndex] - (dist2NextPoint + 1.0) * y2[startIndex + 1])) / 6.0 + y[startIndex] - dist2NextPoint * y[startIndex]);
+    }*/
+    public double applyForwardInterpolation(double data[][],double Xr) {
         String str = "";
         int i, j, k, n, m, t;
         double sum, fy, facto, yr;
@@ -204,7 +188,7 @@ public class npkvalues extends javax.swing.JFrame {
         yr = sum + y[0][0];
         // str += "The value of y=f(x) at x = " + Xr + ", is " + yr + ".\n";
         //System.out.println("Str: "+str);
-        int temp = (int) (yr * 100);
+     int temp = (int) (yr * 100);
         return (double) (temp / 100);
     }
     public double applyBackwordInterpolation(double data[][],double Xr) {
@@ -220,6 +204,9 @@ public class npkvalues extends javax.swing.JFrame {
              y[i][0] = data[i][1];
             
         }
+
+       
+
         h = x[1] - x[0];
         r = (Xr - x[n - 1] )/ h;
         System.out.println(":::      "+Xr+"  "+x[n-1]+"  "+h);
@@ -255,7 +242,7 @@ public class npkvalues extends javax.swing.JFrame {
   int temp = (int) (yr * 100);
         return (double) (temp / 100);
 
-    } */
+    }
     
     public double funcx(double ex1,double ey1) {
         double temp=0;
@@ -297,11 +284,11 @@ public class npkvalues extends javax.swing.JFrame {
         prnval1 = new javax.swing.JTextField();
         prpval1 = new javax.swing.JTextField();
         prkval1 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jLabel23 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
-        cbcrop1 = new javax.swing.JComboBox<>();
+        cbcrop1 = new javax.swing.JComboBox<String>();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -342,6 +329,13 @@ public class npkvalues extends javax.swing.JFrame {
         nbkval = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        Cubics = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        csnvalue = new javax.swing.JTextField();
+        cspvalue = new javax.swing.JTextField();
+        cskvalue = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         tfcomval = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -451,7 +445,7 @@ public class npkvalues extends javax.swing.JFrame {
 
         jLabel22.setText("K Value:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Newton's Forward", "Newton's Backward", "runge Kutta" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Newton's Forward", "Newton's Backward", "runge Kutta" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -724,7 +718,7 @@ public class npkvalues extends javax.swing.JFrame {
                     .addComponent(nfnval, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nfpval, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nfkval, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,7 +765,7 @@ public class npkvalues extends javax.swing.JFrame {
                         .addComponent(jLabel36)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rknval, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -793,6 +787,12 @@ public class npkvalues extends javax.swing.JFrame {
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NEWTON'S BACKWARD", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
+        nbnval.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nbnvalActionPerformed(evt);
+            }
+        });
+
         jLabel40.setText("N Value:");
 
         jLabel41.setText("P Value:");
@@ -804,7 +804,7 @@ public class npkvalues extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel41)
                     .addComponent(jLabel40)
@@ -815,7 +815,7 @@ public class npkvalues extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(nbpval, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                         .addComponent(nbkval, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(0, 65, Short.MAX_VALUE))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -842,6 +842,72 @@ public class npkvalues extends javax.swing.JFrame {
             }
         });
 
+        Cubics.setBorder(javax.swing.BorderFactory.createTitledBorder("Cubics Pline"));
+        Cubics.setName("Cubics Pline"); // NOI18N
+
+        jLabel11.setText("N Value:");
+
+        jLabel28.setText("P Value :");
+
+        jLabel34.setText("K Value :");
+
+        csnvalue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                csnvalueActionPerformed(evt);
+            }
+        });
+
+        cspvalue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cspvalueActionPerformed(evt);
+            }
+        });
+
+        cskvalue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cskvalueActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout CubicsLayout = new javax.swing.GroupLayout(Cubics);
+        Cubics.setLayout(CubicsLayout);
+        CubicsLayout.setHorizontalGroup(
+            CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CubicsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CubicsLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(csnvalue, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CubicsLayout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(18, 18, 18)
+                        .addComponent(cspvalue, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CubicsLayout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addGap(18, 18, 18)
+                        .addComponent(cskvalue, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        CubicsLayout.setVerticalGroup(
+            CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CubicsLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(csnvalue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel28)
+                    .addComponent(cspvalue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(CubicsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cskvalue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addContainerGap(85, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
         jFrame2.getContentPane().setLayout(jFrame2Layout);
         jFrame2Layout.setHorizontalGroup(
@@ -851,10 +917,12 @@ public class npkvalues extends javax.swing.JFrame {
                     .addGroup(jFrame2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Cubics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jFrame2Layout.createSequentialGroup()
                         .addGap(306, 306, 306)
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -863,7 +931,7 @@ public class npkvalues extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -875,15 +943,17 @@ public class npkvalues extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Cubics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70)
                 .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton10)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton9)
                 .addGap(29, 29, 29))
         );
@@ -916,7 +986,7 @@ public class npkvalues extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -926,7 +996,7 @@ public class npkvalues extends javax.swing.JFrame {
                         .addGap(44, 44, 44)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 1, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sal1n, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfcomval, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1060,8 +1130,7 @@ public class npkvalues extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sal2n, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10))
+                                .addComponent(sal2n, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel9)
@@ -1126,7 +1195,7 @@ public class npkvalues extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -1389,202 +1458,12 @@ catch(Exception e)
 {System.out.println(e.getMessage());}        // TODO add your handling code here:
     }//GEN-LAST:event_jFrame1WindowOpened
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-double dist1=50,dist2=150;
-double sumn=0,sump=0,sumk=0;
-double temp1=0;
-sumn=N[0][1]+N[1][1]+N[2][1];
-sump=P[0][1]+P[1][1]+P[2][1];
-sumk=K[0][1]+K[1][1]+K[2][1];
-
-double n1d[] = {N[0][1],N[1][1],N[2][1]};
-double p1d[] = {P[0][1],P[1][1],P[2][1]};
-double k1d[] = {K[0][1],K[1][1],K[2][1]};
-
-CubicSpline obj = new CubicSpline(n1d);
-CubicSpline obj1 = new CubicSpline(p1d);
-CubicSpline obj2 = new CubicSpline(k1d);
-//newtons backward
-temp1=0;
-temp1=temp1+sumn;
-//double frdval=this.applyBackwordInterpolation(N,dist1);
-double frdval=obj.interpolate(0, dist1);
-temp1=temp1+frdval;
-//frdval=this.applyBackwordInterpolation(N,dist2);
-frdval=obj.interpolate(0, dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
-int temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nbnval.setText(""+temp1);
-temp1=0;
-temp1=temp1+sump;
-//frdval=this.applyBackwordInterpolation(P,dist1);
-frdval=obj1.interpolate(0, dist1);
-temp1=temp1+frdval;
-//frdval=this.applyBackwordInterpolation(P,dist2);
-frdval=obj1.interpolate(0, dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
- temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nbpval.setText(""+temp1);
-
-temp1=0;
-temp1=temp1+sumk;
-frdval=obj2.interpolate(0, dist1);
-//frdval=this.applyBackwordInterpolation(K,dist1);
-temp1=temp1+frdval;
-frdval=obj2.interpolate(0, dist2);
-//frdval=this.applyBackwordInterpolation(K,dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
- temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nbkval.setText(""+temp1);
-
-//newtons forward
-temp1=0;
-temp1=temp1+sumn;
-//frdval=this.applyForwardInterpolation(N,dist1);
-frdval=obj.interpolate(0, dist1);
-temp1=temp1+frdval;
-//frdval=this.applyForwardInterpolation(N,dist2);
-frdval=obj.interpolate(0, dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
- temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nfnval.setText(""+temp1);
-temp1=0;
-temp1=temp1+sump;
-//frdval=this.applyForwardInterpolation(P,dist1);
-frdval=obj1.interpolate(0, dist1);
-temp1=temp1+frdval;
-//frdval=this.applyForwardInterpolation(P,dist2);
-frdval=obj1.interpolate(0, dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
- temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nfpval.setText(""+temp1);
-
-temp1=0;
-temp1=temp1+sumk;
-//frdval=this.applyForwardInterpolation(K,dist1);
-frdval=obj2.interpolate(0, dist1);
-temp1=temp1+frdval;
-//frdval=this.applyForwardInterpolation(K,dist2);
-frdval=obj2.interpolate(0, dist2);
-temp1=temp1+frdval;
-temp1=temp1/5;
-temp = (int) (temp1 * 100);
-        temp1= (double) (temp / 100);
-nfkval.setText(""+temp1);
-
-
-//RUNGE KUTTA
-double k1=0,k2=0,k3=0,k4=0,k=0,rkval=0;
-double x0=N[0][0];
-double y0=N[0][1];
-double yy0=N[0][1];
-double rkh=50;
-
-k1=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k1/2);
-k2=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k2/2);
-k3=rkh*funcx(x0,y0);
-x0=x0+rkh;
-y0=y0+k3;
-k4=rkh*funcx(x0,y0);
-
-k=k1+(2*k2)+(2*k3)+k4;
-k=k/6;
-
-rkval=yy0+k;
-temp1=0;
-temp1=temp1+sumn+rkval;
-temp1=(temp1+8)/4;
-rknval.setText(""+temp1);
-
-
- k1=0;k2=0;k3=0;k4=0;k=0;rkval=0;
- x0=P[0][0];
- y0=P[0][1];
- yy0=P[0][1];
- rkh=50;
-
-k1=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k1/2);
-k2=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k2/2);
-k3=rkh*funcx(x0,y0);
-x0=x0+rkh;
-y0=y0+k3;
-k4=rkh*funcx(x0,y0);
-
-k=k1+(2*k2)+(2*k3)+k4;
-k=k/6;
-
-rkval=yy0+k;
-temp1=0;
-temp1=temp1+sump+rkval;
-temp1=(temp1+7)/4;
-rkpval.setText(""+temp1);
-
-
-k1=0;k2=0;k3=0;k4=0;k=0;rkval=0;
- x0=K[0][0];
- y0=K[0][1];
- yy0=K[0][1];
- rkh=50;
-
-k1=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k1/2);
-k2=rkh*funcx(x0,y0);
-x0=x0+(rkh/2);
-y0=y0+(k2/2);
-k3=rkh*funcx(x0,y0);
-x0=x0+rkh;
-y0=y0+k3;
-k4=rkh*funcx(x0,y0);
-
-k=k1+(2*k2)+(2*k3)+k4;
-k=k/6;
-
-rkval=yy0+k;
-temp1=0;
-temp1=temp1+sumk+rkval;
-temp1=temp1/4;
-rkkval.setText(""+temp1);
-
-
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 jFrame2.setSize(900,900);
         jFrame2.setVisible(true);
 this.dispose();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-jFrame1.setSize(900,900);
-        jFrame1.setVisible(true);
-
-this.dispose();// TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
 
@@ -1615,6 +1494,223 @@ if(ind==2)
 }
 // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        double dist1=50,dist2=150;
+        double sumn=0,sump=0,sumk=0;
+        double temp1=0;
+        sumn=N[0][1]+N[1][1]+N[2][1];
+        sump=P[0][1]+P[1][1]+P[2][1];
+        sumk=K[0][1]+K[1][1]+K[2][1];
+
+        //newtons backward
+        temp1=0;
+        temp1=temp1+sumn;
+        double frdval=this.applyBackwordInterpolation(N,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyBackwordInterpolation(N,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        int temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nbnval.setText(""+temp1);
+        temp1=0;
+        temp1=temp1+sump;
+        frdval=this.applyBackwordInterpolation(P,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyBackwordInterpolation(P,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nbpval.setText(""+temp1);
+
+        temp1=0;
+        temp1=temp1+sumk;
+        frdval=this.applyBackwordInterpolation(K,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyBackwordInterpolation(K,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nbkval.setText(""+temp1);
+
+        //newtons forward
+        temp1=0;
+        temp1=temp1+sumn;
+        frdval=this.applyForwardInterpolation(N,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyForwardInterpolation(N,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nfnval.setText(""+temp1);
+        temp1=0;
+        temp1=temp1+sump;
+        frdval=this.applyForwardInterpolation(P,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyForwardInterpolation(P,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nfpval.setText(""+temp1);
+
+        temp1=0;
+        temp1=temp1+sumk;
+        frdval=this.applyForwardInterpolation(K,dist1);
+        temp1=temp1+frdval;
+        frdval=this.applyForwardInterpolation(K,dist2);
+        temp1=temp1+frdval;
+        temp1=temp1/5;
+        temp = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        nfkval.setText(""+temp1);
+
+        //RUNGE KUTTA
+        double k1=0,k2=0,k3=0,k4=0,k=0,rkval=0;
+        double x0=N[0][0];
+        double y0=N[0][1];
+        double yy0=N[0][1];
+        double rkh=50;
+
+        k1=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k1/2);
+        k2=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k2/2);
+        k3=rkh*funcx(x0,y0);
+        x0=x0+rkh;
+        y0=y0+k3;
+        k4=rkh*funcx(x0,y0);
+
+        k=k1+(2*k2)+(2*k3)+k4;
+        k=k/6;
+
+        rkval=yy0+k;
+        temp1=0;
+        temp1=temp1+sumn+rkval;
+        temp1=(temp1+8)/4;
+        rknval.setText(""+temp1);
+
+        k1=0;k2=0;k3=0;k4=0;k=0;rkval=0;
+        x0=P[0][0];
+        y0=P[0][1];
+        yy0=P[0][1];
+        rkh=50;
+
+        k1=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k1/2);
+        k2=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k2/2);
+        k3=rkh*funcx(x0,y0);
+        x0=x0+rkh;
+        y0=y0+k3;
+        k4=rkh*funcx(x0,y0);
+
+        k=k1+(2*k2)+(2*k3)+k4;
+        k=k/6;
+
+        rkval=yy0+k;
+        temp1=0;
+        temp1=temp1+sump+rkval;
+        temp1=(temp1+7)/4;
+        rkpval.setText(""+temp1);
+
+        k1=0;k2=0;k3=0;k4=0;k=0;rkval=0;
+        x0=K[0][0];
+        y0=K[0][1];
+        yy0=K[0][1];
+        rkh=50;
+
+        k1=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k1/2);
+        k2=rkh*funcx(x0,y0);
+        x0=x0+(rkh/2);
+        y0=y0+(k2/2);
+        k3=rkh*funcx(x0,y0);
+        x0=x0+rkh;
+        y0=y0+k3;
+        k4=rkh*funcx(x0,y0);
+
+        k=k1+(2*k2)+(2*k3)+k4;
+        k=k/6;
+
+        rkval=yy0+k;
+        temp1=0;
+        temp1=temp1+sumk+rkval;
+        temp1=temp1/4;
+        rkkval.setText(""+temp1);
+
+        /* Cubics Spline
+        
+        temp1=0;
+        temp1=temp1+sumn;
+        double csval = this.applyCubicSpline(N,dist1);
+        temp1=temp1+frdval;
+        csval = this.applyCubicSpline(N,dist2);
+        temp1=temp1+ csval;
+        temp1=temp1/5;
+        int tempx = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        csnvalue.setText(""+temp1);
+        
+        temp1=0;
+        temp1=temp1+sumn;
+        csval = this.applyCubicSpline(P,dist1);
+        temp1=temp1+frdval;
+        csval = this.applyCubicSpline(P,dist2);
+        temp1=temp1+ csval;
+        temp1=temp1/5;
+        tempx = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        cspvalue.setText(""+temp1);
+        
+        temp1=0;
+        temp1=temp1+sumn;
+        csval = this.applyCubicSpline(K,dist1);
+        temp1=temp1+frdval;
+        csval = this.applyCubicSpline(K,dist2);
+        temp1=temp1+ csval;
+        temp1=temp1/5;
+        tempx = (int) (temp1 * 100);
+        temp1= (double) (temp / 100);
+        cskvalue.setText(""+temp1);  
+        
+    }*///GEN-LAST:event_jButton10ActionPerformed
+
+    private void nbnvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nbnvalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nbnvalActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jFrame1.setSize(900,900);
+        jFrame1.setVisible(true);
+
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void csnvalueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csnvalueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_csnvalueActionPerformed
+
+    private void cspvalueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cspvalueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cspvalueActionPerformed
+
+    private void cskvalueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cskvalueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cskvalueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1652,7 +1748,11 @@ if(ind==2)
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Cubics;
     private javax.swing.JComboBox<String> cbcrop1;
+    private javax.swing.JTextField cskvalue;
+    private javax.swing.JTextField csnvalue;
+    private javax.swing.JTextField cspvalue;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -1666,6 +1766,7 @@ if(ind==2)
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1683,12 +1784,14 @@ if(ind==2)
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -1750,4 +1853,10 @@ if(ind==2)
     private javax.swing.JTextField tfty2;
     private javax.swing.JTextField tfty3;
     // End of variables declaration//GEN-END:variables
+
+    private double appyCubicSpline(double[][] N, double dist1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
 }
