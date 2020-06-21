@@ -143,6 +143,7 @@ public class npkvalues extends javax.swing.JFrame {
 	
     return (dist2NextPoint * y[startIndex + 1] - ((dist2NextPoint - 1.0) * dist2NextPoint * ((dist2NextPoint - 2.0) * y2[startIndex] - (dist2NextPoint + 1.0) * y2[startIndex + 1])) / 6.0 + y[startIndex] - dist2NextPoint * y[startIndex]);
     }*/
+    
     public double applyForwardInterpolation(double data[][],double Xr) {
         String str = "";
         int i, j, k, n, m, t;
